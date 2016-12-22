@@ -3,11 +3,15 @@ import {Router, Route, browserHistory} from 'react-router';
 
 import Home from './pages/Home';
 
+const routes = (
+  <Route path="/" component={Home} />
+);
+
 export default class Routes extends Component {
   render() {
     return (
       <Router history={browserHistory}>
-        <Route path="/" component={Home} />
+        {routes}
       </Router>
     );
   }
