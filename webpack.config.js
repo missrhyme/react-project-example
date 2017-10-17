@@ -1,11 +1,11 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: [
     'webpack-hot-middleware/client',
-    './src/index'
+    './src/index.jsx'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
@@ -13,20 +13,44 @@ module.exports = {
     publicPath: '/dist/'
   },
   resolve: {
-    modulesDirectories: ['node_modules'],
-    extensions: ['', '.js', '.jsx', '.json']
+    extensions: ['.js', '.jsx', '.ts', '.tsx']
   },
   plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: ['react-hot', 'babel'],
-      exclude: /node_modules/,
-      include: __dirname
-    }]
+    rules: [
+      {
+        test: /\.jsx?$/,
+        use: [
+          {
+            loader: 'react-hot-loader'
+          },
+          {
+            loader: 'babel-loader'
+          }
+        ],
+        exclude: /node_modules/
+      },
+      {
+        test: /\.(css|scss)$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'postcss-loader'
+          },
+          {
+            loader: 'sass-loader'
+          }
+        ],
+        exclude: /node_modules/
+      }
+    ]
   }
 };
