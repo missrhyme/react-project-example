@@ -4,8 +4,9 @@ const webpack = require('webpack');
 module.exports = {
   devtool: 'cheap-module-eval-source-map',
   entry: [
+    'react-hot-loader/patch',
     'webpack-hot-middleware/client',
-    './src/index.jsx'
+    path.resolve('./src/dev.jsx')
   ],
   output: {
     path: path.join(__dirname, 'dist'),
@@ -24,9 +25,9 @@ module.exports = {
       {
         test: /\.jsx?$/,
         use: [
-          {
-            loader: 'react-hot-loader'
-          },
+          // {
+          //   loader: 'react-hot-loader/webpack'
+          // },
           {
             loader: 'babel-loader'
           }
