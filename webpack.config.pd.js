@@ -1,7 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// ExtractTextPlugin need to update for webpack4
-// const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: [
@@ -9,7 +9,7 @@ module.exports = {
   ],
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: 'bundle.[hash].js',
     publicPath: './'
   },
   resolve: {
@@ -21,10 +21,8 @@ module.exports = {
     lodash: '_'
   },
   plugins: [
-    // new ExtractTextPlugin({
-    //   filename: 'bundle.css',
-    //   allChunks: true
-    // }),
+    new CleanWebpackPlugin([`${path.join(__dirname, 'dist')}/*.*`]),
+    new ExtractTextPlugin('bundle.[hash].css'),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './index.html')
     })
@@ -40,28 +38,28 @@ module.exports = {
         ],
         exclude: /node_modules/
       },
-      {
-        test: /\.(css|scss)$/,
-        use: [{
-          loader: 'style-loader'
-        },
-        {
-          loader: 'css-loader'
-        },
-        {
-          loader: 'postcss-loader'
-        },
-        {
-          loader: 'sass-loader'
-        }]
-      },
       // {
       //   test: /\.(css|scss)$/,
-      //   use: ExtractTextPlugin.extract({
-      //     fallback: 'style-loader',
-      //     use: ['css-loader', 'postcss-loader', 'sass-loader']
-      //   })
+      //   use: [{
+      //     loader: 'style-loader'
+      //   },
+      //   {
+      //     loader: 'css-loader'
+      //   },
+      //   {
+      //     loader: 'postcss-loader'
+      //   },
+      //   {
+      //     loader: 'sass-loader'
+      //   }]
       // },
+      {
+        test: /\.(css|scss)$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'postcss-loader', 'sass-loader']
+        })
+      },
       {
         test: /\.(png|jpg|gif|svg|mp4)$/,
         use: {
