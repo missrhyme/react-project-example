@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {Component} from 'react';
 
+import './index.scss';
+
 export default class Test extends Component {
   public render() {
     return (
