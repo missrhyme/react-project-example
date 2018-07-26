@@ -1,4 +1,4 @@
-cd ../components
+cd ../pages
 mkdir $1
 cd $1
 touch index.tsx

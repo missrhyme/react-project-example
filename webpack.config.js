@@ -3,9 +3,9 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   devtool: 'cheap-module-eval-source-map',
   entry: [
-    'react-hot-loader/patch',
     'webpack-hot-middleware/client',
     path.resolve('./src/dev.tsx')
   ],
@@ -30,9 +30,6 @@ module.exports = {
       {
         test: /\.tsx?$/,
         use: [
-          {
-            loader: 'react-hot-loader/webpack'
-          },
           {
             loader: 'ts-loader'
           }
