@@ -1,12 +1,15 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+
+const port = process.env.PORT || 2222;
 
 module.exports = {
   mode: 'development',
   devtool: 'cheap-module-eval-source-map',
   entry: [
-    'webpack-hot-middleware/client',
+    `webpack-hot-middleware/client?path=http://localhost:${port}/__webpack_hmr`,
     path.resolve('./src/dev.tsx')
   ],
   output: {
@@ -17,7 +20,13 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx']
   },
+  // externals: {
+  //   react: 'React',
+  //   'react-dom': 'ReactDOM',
+  //   lodash: '_'
+  // },
   plugins: [
+    new ForkTsCheckerWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
@@ -29,11 +38,27 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: [
-          {
-            loader: 'ts-loader'
+        use: {
+          loader: 'babel-loader',
+          options: {
+            cacheDirectory: true,
+            babelrc: false,
+            presets: [
+              [
+                '@babel/preset-env',
+                {targets: {browsers: 'last 2 versions'}} // or whatever your project requires
+              ],
+              '@babel/preset-typescript',
+              '@babel/preset-react'
+            ],
+            plugins: [
+              // plugin-proposal-decorators is only needed if you're using experimental decorators in TypeScript
+              ['@babel/plugin-proposal-decorators', {legacy: true}],
+              ['@babel/plugin-proposal-class-properties', {loose: true}],
+              'react-hot-loader/babel'
+            ]
           }
-        ],
+        },
         exclude: /node_modules/
       },
       {

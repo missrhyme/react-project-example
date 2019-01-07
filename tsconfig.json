@@ -4,8 +4,9 @@
     "target": "es5",
     "jsx": "react",
     "allowJs": true,
-    "types": [],
-    "lib": ["es2015", "dom"]
+    "types": ["node"],
+    "lib": ["es2015", "dom"],
+    "keyofStringsOnly": true
   },
   "exclude": [
     "node_modules",
