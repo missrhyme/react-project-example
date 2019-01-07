@@ -6,7 +6,7 @@ export default class BaseComponent extends Component {
   public render() {
     return ([
       <p key={1}>this is component1</p>,
-      <p key={2}>this is component2333</p>
+      <p key={2}>this is component2</p>
     ]);
   }
 }

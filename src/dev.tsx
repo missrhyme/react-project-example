@@ -1,8 +1,15 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { hot } from 'react-hot-loader';
-import Routes from './Routes';
+import {render} from 'react-dom';
+import {Provider} from 'redux-zero/react';
+import Routes from './HotApp';
 
-const App = hot(module)(Routes);
+import store from './store';
 
-ReactDOM.render(<App />, document.getElementById('app'));
+const rootEle = document.getElementById('app');
+
+render(
+  <Provider store={store}>
+    <Routes />
+  </Provider>,
+  rootEle
+);
