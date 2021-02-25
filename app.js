@@ -1,20 +1,20 @@
 const webpack = require('webpack');
+const path = require('path');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const config = require('./webpack.config');
-const app = new (require('express'))();
+const express = require('express');
+const app = express();
 
 const port = process.env.PORT || 2222;
 
 const compiler = webpack(config);
-// app.use('/lib', express.static('lib'))
-const devMiddleware = webpackDevMiddleware(compiler, {noInfo: true, publicPath: config.output.publicPath});
+const devMiddleware = webpackDevMiddleware(compiler, {publicPath: config.output.publicPath});
 app.use(devMiddleware);
 app.use(webpackHotMiddleware(compiler));
 
 app.get('*', (req, res) => {
-  const htmlBuffer = devMiddleware.fileSystem.readFileSync(`${config.output.path}/index.html`);
-  res.send(htmlBuffer.toString());
+  res.sendFile(path.resolve(__dirname, `${config.output.path}/index.html`));
 });
 
 app.listen(port, (error) => {

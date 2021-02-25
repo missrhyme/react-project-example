@@ -7,7 +7,7 @@ const port = process.env.PORT || 2222;
 
 module.exports = {
   mode: 'development',
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'source-map',
   entry: [
     `webpack-hot-middleware/client?path=http://localhost:${port}/__webpack_hmr`,
     path.resolve('./src/dev.tsx')
@@ -83,14 +83,12 @@ module.exports = {
         test: /\.(png|jpg|gif|svg|mp4)$/,
         use: {
           loader: 'url-loader',
-          query: {}
         }
       },
       {
         test: /\.woff|\.woff2|\.eot|\.ttf/,
         use: {
           loader: 'url-loader',
-          query: {}
         }
       }
     ]

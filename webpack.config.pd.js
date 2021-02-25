@@ -1,7 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 
 module.exports = {
   entry: [
@@ -9,7 +10,7 @@ module.exports = {
   ],
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'bundle.[hash].js',
+    filename: 'bundle.[fullhash].js',
     publicPath: './'
   },
   resolve: {
@@ -21,7 +22,7 @@ module.exports = {
     lodash: '_'
   },
   plugins: [
-    new CleanWebpackPlugin([`${path.join(__dirname, 'dist')}/*.*`]),
+    new CleanWebpackPlugin(),
     // new MiniCssExtractPlugin({
     //   // Options similar to the same options in webpackOptions.output
     //   // both options are optional
@@ -71,7 +72,7 @@ module.exports = {
         test: /\.(png|jpg|gif|svg|mp4)$/,
         use: {
           loader: 'url-loader',
-          query: {
+          options: {
             limit: 10000
           }
         }
@@ -80,7 +81,7 @@ module.exports = {
         test: /\.woff|\.woff2|.eot|\.ttf/,
         use: {
           loader: 'url-loader',
-          query: {
+          options: {
             limit: 5000
           }
         }

@@ -1,14 +1,13 @@
 import * as React from 'react';
-import {Component} from 'react';
 
 import './index.scss';
 
-export default class Test extends Component {
-  public render() {
-    return (
-      <div>
-        this is Test
-      </div>
-    );
-  }
+const Test: React.FC = () => {
+  return (
+    <div>
+      this is Test
+    </div>
+  );
 }
+
+export default Test;

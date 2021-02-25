@@ -1,31 +1,24 @@
 import * as React from 'react';
-import {Component} from 'react';
-// import {connect} from 'redux-zero/react';
+import { useAction, useSelector, useStore } from 'redux-zero/react';
 import BaseComponent from '../../components/BaseComponent';
-
-// import {increment, decrement, query} from '../actions';
-
-// const mapToProps = ({count}) => ({count});
-
-// const Count = connect(mapToProps)(({count}) => <p>{count}</p>);
 
 import './index.scss';
 
-interface IPropType {
-
+const Home: React.FC = () => {
+  const store = useStore();
+  console.log(store.getState());
+  const count = useSelector(({count}) => count);
+  const increase = useAction(({count}) => ({
+    count: count + 1
+  }));
+  return (
+    <div>
+      this is Home. <br/>
+      The Count is {count}
+      <button onClick={increase}>+</button>
+      <BaseComponent />
+    </div>
+  );
 }
 
-interface IStateType {
-
-}
-
-export default class Home extends Component<IPropType, IStateType> {
-  public render() {
-    return (
-      <div>
-        this is Home
-        <BaseComponent />
-      </div>
-    );
-  }
-}
+export default Home;
